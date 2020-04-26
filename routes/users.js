@@ -107,8 +107,9 @@ app.post('/add', function(req, res, next){
         res.render('user/add', { 
             title: 'Add New User',
             name: req.body.name,
-            age: req.body.age,
-            email: req.body.email
+            address: req.body.address,
+            email: req.body.email,
+            phone: req.body.phone
         })
     }
 })
@@ -131,8 +132,9 @@ app.get('/edit/(:id)', function(req, res, next){
                     //data: rows[0],
                     id: rows[0].id,
                     name: rows[0].name,
-                    age: rows[0].age,
-                    email: rows[0].email                    
+                    address: rows[0].address,
+                    email: rows[0].email,
+                    phone: rows[0].phone
                 })
             }            
         })
@@ -142,9 +144,10 @@ app.get('/edit/(:id)', function(req, res, next){
 // EDIT USER POST ACTION
 app.put('/edit/(:id)', function(req, res, next) {
     req.assert('name', 'Name is required').notEmpty()           //Validate name
-    req.assert('age', 'Age is required').notEmpty()             //Validate age
+    req.assert('address', 'Address is required').notEmpty()             //Validate age
     req.assert('email', 'A valid email is required').isEmail()  //Validate email
- 
+    req.assert('phone', 'Phone is required').notEmpty()             //Validate phone
+    
     var errors = req.validationErrors()
     
     if( !errors ) {   //No errors were found.  Passed Validation!
@@ -160,8 +163,9 @@ app.put('/edit/(:id)', function(req, res, next) {
         ********************************************/
         var user = {
             name: req.sanitize('name').escape().trim(),
-            age: req.sanitize('age').escape().trim(),
-            email: req.sanitize('email').escape().trim()
+            address: req.sanitize('adress').escape().trim(),
+            email: req.sanitize('email').escape().trim(),
+            phone: req.sanitize('phone').escape().trim()
         }
         
         req.getConnection(function(error, conn) {
@@ -175,8 +179,9 @@ app.put('/edit/(:id)', function(req, res, next) {
                         title: 'Edit User',
                         id: req.params.id,
                         name: req.body.name,
-                        age: req.body.age,
-                        email: req.body.email
+                        address: req.body.address,
+                        email: req.body.email,
+                        phone: req.body.phone
                     })
                 } else {
                     req.flash('success', 'Data updated successfully!')
@@ -186,8 +191,9 @@ app.put('/edit/(:id)', function(req, res, next) {
                         title: 'Edit User',
                         id: req.params.id,
                         name: req.body.name,
-                        age: req.body.age,
-                        email: req.body.email
+                        address: req.body.address,
+                        email: req.body.email,
+                        phone: req.body.phone
                     })
                 }
             })
@@ -208,8 +214,9 @@ app.put('/edit/(:id)', function(req, res, next) {
             title: 'Edit User',            
             id: req.params.id, 
             name: req.body.name,
-            age: req.body.age,
-            email: req.body.email
+            address: req.body.address,
+            email: req.body.email,
+            phone: req.body.phone
         })
     }
 })
